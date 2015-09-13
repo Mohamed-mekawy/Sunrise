@@ -6,9 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-
-
-
 public class MainActivity extends ActionBarActivity {
 
     @Override
@@ -16,6 +13,12 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    public void Branch1(){
+
+    }
+
+
 
 
     @Override
