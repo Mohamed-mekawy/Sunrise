@@ -18,6 +18,12 @@ public class ForecastFragment extends Fragment {
     ArrayAdapter<String> mForecastAdapter;
 //sad
     public ForecastFragment() {
+        }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override

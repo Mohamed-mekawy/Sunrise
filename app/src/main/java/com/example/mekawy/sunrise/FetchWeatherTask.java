@@ -15,13 +15,16 @@ import java.net.URL;
 public class FetchWeatherTask extends AsyncTask<String,Void,String>{
 
     private String LOG_TAG=FetchWeatherTask.class.getSimpleName()+"TAG";
+    private int numDays = 7;
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //check results
         Log.i(LOG_TAG,s);
-
+        Json_parser parser=new Json_parser();
+        //execute Json_parser Asynch Task using object contain "Json_text" and number of days;
+        parser.execute(s,numDays);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String>{
         //URI parameters
         String format = "json";
         String units = "metric";
-        int numDays = 7;
+
         //URI prefix
         final String QUERY_PARAM = "q";
         final String FORMAT_PARAM = "mode";

@@ -13,7 +13,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FetchWeatherTask f=new FetchWeatherTask();
-        f.execute("19200");
+        f.execute("94043");
     }
 
 
