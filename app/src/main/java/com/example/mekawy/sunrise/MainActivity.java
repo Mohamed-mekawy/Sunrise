@@ -12,12 +12,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FetchWeatherTask f=new FetchWeatherTask();
+        f.execute("19200");
     }
-
-    public void Branch1(){
-
-    }
-
 
 
 
