@@ -3,6 +3,7 @@ package com.example.mekawy.sunrise;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,12 +13,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+
 public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
     @Override
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
-        //Retrieve the Strings Array and ready to set Adapter.
+        //unsuitable method
+        ForecastFragment.mForecastAdapter.clear();
+        for(String entry:strings){
+            ForecastFragment.mForecastAdapter.add(entry);
+        }
     }
 
     //Append High and Low tempreature Format Like: 26/10

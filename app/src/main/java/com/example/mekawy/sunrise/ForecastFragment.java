@@ -2,6 +2,7 @@ package com.example.mekawy.sunrise;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,14 @@ import java.util.List;
 
 
 public class ForecastFragment extends Fragment {
+    //many Restrections and will be modified later
+    public static ArrayAdapter<String> mForecastAdapter=null;
 
-    ArrayAdapter<String> mForecastAdapter;
-//sad
+
     public ForecastFragment() {
-        }
+
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class ForecastFragment extends Fragment {
         View rootView= inflater.inflate(R.layout.fragment_main, container, false);
         //Dummy Data
         String[] data = {
-                "Mon 6/23?- Sunny - 31/17",
+                "Mon 6/23 - Sunny - 31/17",
                 "Tue 6/24 - Foggy - 21/8",
                 "Wed 6/25 - Cloudy - 22/17",
                 "Thurs 6/26 - Rainy - 18/11",
