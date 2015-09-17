@@ -1,5 +1,6 @@
 package com.example.mekawy.sunrise;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +35,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //satrt Setting Activity
+            startActivity(new Intent(getApplicationContext(),Setting_Activity.class));
             return true;
         }
 

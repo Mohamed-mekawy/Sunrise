@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- units List preference human readable items -->
+    <string-array name="pref_Readable_units_values">
+        <item>@string/pref_units_label_metric_h</item>
+        <item>@string/pref_units_label_imperial_h</item>
+    </string-array>
+
+    <!-- units List preference associated values items -->
+    <string-array name="pref_key_units_values">
+        <item>@string/pref_units_label_metric</item>
+        <item>@string/pref_units_label_imperial</item>
+    </string-array>
+
+</resources>

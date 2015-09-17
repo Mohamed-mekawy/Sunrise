@@ -2,4 +2,28 @@
     <string name="app_name">Sunrise</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!-- Location Edit text preference -->
+    <!-- The Key name and Value cannot be translated -->
+    <string name="pref_location_title">location</string>
+    <string name="pref_location_default" translatable ="false">94043</string>
+    <string name="pref_location_key" translatable ="false">location</string>
+
+    <!-- unit List selection preference -->
+    <!-- The Key name and Value cannot be translated -->
+    <string name="pref_units_title">Temperature Units</string>
+    <string name="pref_units_key" translatable ="false">units</string>
+    <string name="pref_units_default_value">Metric</string>
+
+    <!-- list items -->
+    <!-- Pref real Values -->
+    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label_imperial">Imperial</string>
+
+    <!-- pref human Readable -->
+    <string name="pref_units_label_metric_h">Metric Format</string>
+    <string name="pref_units_label_imperial_h">Imperial Format</string>
+
+
+
+
 </resources>

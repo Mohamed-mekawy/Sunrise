@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Location EditText-->
+    <EditTextPreference
+    android:title="@string/pref_location_title"
+    android:key="@string/pref_location_key"
+    android:defaultValue="@string/pref_location_default"
+    android:textColor="#0000FF"
+    android:singleLine="true"
+    android:inputType="text"
+    />
+
+    <!-- Measure unit Selection list -->
+    <ListPreference
+        android:title="@string/pref_units_title"
+        android:key="@string/pref_units_key"
+        android:defaultValue="@string/pref_units_default_value"
+        android:entries="@array/pref_Readable_units_values"
+        android:entryValues="@array/pref_key_units_values"
+        android:textColor="#FF0000"
+        />
+
+</PreferenceScreen>
