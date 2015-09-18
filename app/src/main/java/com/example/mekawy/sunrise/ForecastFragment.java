@@ -1,5 +1,7 @@
 package com.example.mekawy.sunrise;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,22 @@ public class ForecastFragment extends Fragment {
     //many Restrections and will be modified later
     public static ArrayAdapter<String> mForecastAdapter=null;
 
-
     public ForecastFragment() {
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    public void updateWeather(){
+        SharedPreferences weather_pref= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String current_weather_loc=weather_pref.getString
+                (getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        FetchWeatherTask new_weather_fetch=new FetchWeatherTask();
+        new_weather_fetch.execute(current_weather_loc);
     }
 
 

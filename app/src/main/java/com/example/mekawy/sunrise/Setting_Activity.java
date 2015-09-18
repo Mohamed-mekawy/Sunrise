@@ -28,9 +28,7 @@ public class Setting_Activity extends PreferenceActivity implements Preference.O
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
-
         String value=o.toString();
-        Log.i("LOGG",value);
         preference.setSummary(value);
         return true;
     }
