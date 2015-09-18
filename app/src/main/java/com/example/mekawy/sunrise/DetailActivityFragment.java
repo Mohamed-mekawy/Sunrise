@@ -20,10 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-/**
- * A placeholder fragment containing a simple view.
- */
 public class DetailActivityFragment extends Fragment {
 
     private static final String FORECAST_SHARE_HASHTAG = " #SunriseApp";
