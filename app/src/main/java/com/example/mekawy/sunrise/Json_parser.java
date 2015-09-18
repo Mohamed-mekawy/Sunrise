@@ -1,6 +1,7 @@
 package com.example.mekawy.sunrise;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;

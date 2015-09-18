@@ -1,9 +1,11 @@
 package com.example.mekawy.sunrise;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
