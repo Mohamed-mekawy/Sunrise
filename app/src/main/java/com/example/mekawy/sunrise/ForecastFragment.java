@@ -1,5 +1,6 @@
 package com.example.mekawy.sunrise;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,7 +23,6 @@ public class ForecastFragment extends Fragment {
     public static ArrayAdapter<String> mForecastAdapter=null;
 
     public ForecastFragment() {
-
     }
 
     @Override
@@ -71,6 +72,16 @@ public class ForecastFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String intent_msg=adapterView.getItemAtPosition(i).toString();
+                startActivity(new Intent(getActivity(),DetailActivity.class).putExtra(Intent.EXTRA_TEXT,intent_msg));
+            }
+        });
+
         return rootView;
     }
 }
