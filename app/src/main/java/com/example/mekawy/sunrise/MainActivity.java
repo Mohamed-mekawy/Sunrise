@@ -1,5 +1,6 @@
 package com.example.mekawy.sunrise;
 
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.security.Provider;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -20,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
     }
 

@@ -34,6 +34,7 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
         return High_t+" / "+Low_t;
     }
 
+
     // Create String[] and Call Function "getReadableDateString" with "x" Days_no for number of days Req.
     private String[] getReadableDateString(int Days_no){
         int index;
@@ -46,6 +47,9 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
         }
         return Days_Strings;
     }
+
+
+
 
     @Override
     protected String[] doInBackground(Object... mEntry){
