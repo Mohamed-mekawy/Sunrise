@@ -9,6 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        <provider
+            android:authorities="com.example.mekawy.sunrise"
+            android:name=".WeatherProvider"/>
+        
+        
         <activity
             android:name=".Setting_Activity"
             android:parentActivityName=".MainActivity" >

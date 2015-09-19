@@ -11,7 +11,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper{
     private static final int DB_Version=1;
     private static final String DB_name="weather.db";
 
-    public WeatherDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public WeatherDbHelper(Context context) {
         super(context, DB_name, null, DB_Version);
     }
 
