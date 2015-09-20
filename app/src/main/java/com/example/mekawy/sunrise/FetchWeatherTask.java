@@ -18,13 +18,25 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String>{
 
     private String LOG_TAG=FetchWeatherTask.class.getSimpleName()+"TAG";
     private int numDays = 7;
+    private String Location_setting;
+
+
+
+    private ArrayAdapter<String> mFetchAdapter;
+    private Context mFetchContext;
+
+    public FetchWeatherTask(ArrayAdapter<String> F_Adapter,Context F_Context){
+            mFetchAdapter=F_Adapter;
+            mFetchContext=F_Context;
+    }
+
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //check results
         Log.i(LOG_TAG,s);
-        Json_parser parser=new Json_parser();
+        Json_parser parser=new Json_parser(mFetchAdapter,mFetchContext);
         //execute Json_parser Asynch Task using object contain "Json_text" and number of days;
         parser.execute(s,numDays);
     }

@@ -1,6 +1,5 @@
 package com.example.mekawy.sunrise;
 
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -17,13 +16,23 @@ import java.util.GregorianCalendar;
 
 public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
+    private ArrayAdapter<String> Json_ArrayAdapter;
+    private Context Json_context;
+
+    public Json_parser(ArrayAdapter<String> Origin_ArrayAdapter,Context Origin_Context){
+            Json_ArrayAdapter=Origin_ArrayAdapter;
+            Json_context=Origin_Context;
+    }
+
+
+
     @Override
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
         //unsuitable method
-        ForecastFragment.mForecastAdapter.clear();
+        Json_ArrayAdapter.clear();
         for(String entry:strings){
-            ForecastFragment.mForecastAdapter.add(entry);
+            Json_ArrayAdapter.add(entry);
         }
     }
 
@@ -50,9 +59,29 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
 
 
+    long addLocation(String location_Setting ,Double LONG,Double LAT ){
+            long retID;
 
+
+
+
+
+        return 0;
+    }
+
+
+
+
+
+    //equal to method
     @Override
     protected String[] doInBackground(Object... mEntry){
+
+        String json_text_entry=(String) mEntry[0];
+        int Day_count_entry=(Integer) mEntry[1];
+
+
+
 
         final String OWM_LIST = "list";
         final String OWM_WEATHER = "weather";
@@ -61,8 +90,8 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
         final String OWM_MIN = "min";
         final String OWM_DESCRIPTION = "main";
 
-        String json_text_entry=(String) mEntry[0];
-        int Day_count_entry=(Integer) mEntry[1];
+
+
         String[] resultStrs = new String[Day_count_entry];
         resultStrs=getReadableDateString(Day_count_entry);
 

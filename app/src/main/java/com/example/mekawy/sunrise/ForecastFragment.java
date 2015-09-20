@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
     //many Restrections and will be modified later
-    public static ArrayAdapter<String> mForecastAdapter=null;
+    private ArrayAdapter<String> mForecastAdapter=null;
 
     public ForecastFragment() {
     }
@@ -35,7 +35,7 @@ public class ForecastFragment extends Fragment {
         SharedPreferences weather_pref= PreferenceManager.getDefaultSharedPreferences(getActivity());
         String current_weather_loc=weather_pref.getString
                 (getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        FetchWeatherTask new_weather_fetch=new FetchWeatherTask();
+        FetchWeatherTask new_weather_fetch=new FetchWeatherTask(mForecastAdapter,getActivity());
         new_weather_fetch.execute(current_weather_loc);
     }
 
