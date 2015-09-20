@@ -24,7 +24,7 @@
     <string name="pref_units_label_imperial_h">Imperial Format</string>
     <string name="title_activity_detail">DetailActivity</string>
 
-
+    <string name="pref_units_metric" translatable="false">metric</string>
 
 
 </resources>
