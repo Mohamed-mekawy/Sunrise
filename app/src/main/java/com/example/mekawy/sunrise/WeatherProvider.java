@@ -300,6 +300,7 @@ public class WeatherProvider extends ContentProvider {
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         Log.i(Provider_tag,"Bulkinsert Method \n");
+
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
 
@@ -309,11 +310,14 @@ public class WeatherProvider extends ContentProvider {
                 int retCount=0;
 
                 try {
+
                     for (ContentValues value : values) {
                         normalizeDate(value);
                         long Bulk = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                        Log.i("Bulktest",Long.toString(Bulk));
                         if(Bulk !=-1)retCount++;
                     }
+
                     db.setTransactionSuccessful();
                 }
 

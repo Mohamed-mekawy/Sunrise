@@ -38,13 +38,13 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String>{
         Log.i(LOG_TAG,s);
         Json_parser parser=new Json_parser(mFetchAdapter,mFetchContext);
         //execute Json_parser Asynch Task using object contain "Json_text" and number of days;
-        parser.execute(s,numDays);
+        parser.execute(s,Location_setting,numDays);
     }
 
     @Override
     protected String doInBackground(String... strings) {
     if(strings.length==0) return null;
-
+        Location_setting=strings[0];
         HttpURLConnection urlConnection=null;
         BufferedReader reader=null;
         String forecastJsonStr=null;

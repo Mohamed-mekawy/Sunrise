@@ -21,7 +21,8 @@ public class WeatherContract {
     public final static String PATH_LOCATION="location";
     public final static String PATH_WEATHER="weather";
 
-    //Conver from UNIX STAMP to julian date
+
+    //Conver from current Millis to julian date
     public static long normalizeDate(long startDate) {
         // normalize the start date to the beginning of the (UTC) day
         Time time = new Time();
@@ -29,6 +30,10 @@ public class WeatherContract {
         int julianDay = Time.getJulianDay(startDate, time.gmtoff);
         return time.setJulianDay(julianDay);
     }
+
+
+
+
     //_ID column will be added to table as the class implememnt BaseColumn
     public static final class LocationEntry implements BaseColumns {
         //ContentProvider URI STUFF
@@ -60,7 +65,6 @@ public class WeatherContract {
 
     /* Inner class that defines the contents of the weather table */
     public static final class WeatherEntry implements BaseColumns {
-
         //ContentProvider STUFF
         public final static Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_WEATHER).build();
         public final static String CONTENT_DIR_TYPE=
