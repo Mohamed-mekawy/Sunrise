@@ -20,12 +20,13 @@ public class WeatherDbHelper extends SQLiteOpenHelper{
         Log.i(WeatherDbHelper.class.getSimpleName(),"onCreate DB helper");
         //location table
         //Table Like : _ID | location_setting | city_name | coord_lat | coord_long
+        //Error was in creation of this table
         final String SQL_CREATE_LOCATION_TABLE="CREATE TABLE "+WeatherContract.LocationEntry.TABLE_NAME +
                 " ( "+ WeatherContract.LocationEntry._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING+" TEXT UNIQUE NOT NULL, "+
                 WeatherContract.LocationEntry.COLUMN_CITY_NAME+" TEXT NOT NULL , "+
-                WeatherContract.LocationEntry.COLUMN_COORD_LAT+"REAL NOT NULL , "+
-                WeatherContract.LocationEntry.COLUMN_COORD_LONG+"REAL NOT NULL );";
+                WeatherContract.LocationEntry.COLUMN_COORD_LAT+" REAL NOT NULL , "+
+                WeatherContract.LocationEntry.COLUMN_COORD_LONG+" REAL NOT NULL );";
 
         // Table: _ID | location_id (fk)| date | weather_id "icon" | short_desc | min | max |humadity | pressure |wind | degree "direction"
         final String SQL_CREATE_WEATHER_TABLE="CREATE TABLE "+WeatherContract.WeatherEntry.TABLE_NAME+ " (" +

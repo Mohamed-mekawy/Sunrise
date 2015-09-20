@@ -1,6 +1,10 @@
 package com.example.mekawy.sunrise;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -59,17 +63,39 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
 
 
-    long addLocation(String location_Setting ,Double LONG,Double LAT ){
-            long retID;
+    long addLocation(String location_Setting ,String City_name,double lat,double lon ){
+            long LocationID;
 
+        Cursor LocatonCursor=Json_context.getContentResolver().
+                query(WeatherContract.LocationEntry.CONTENT_URI,
+                        new String[]{WeatherContract.LocationEntry._ID},
+                        WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING +" = ?",
+                        new String[]{location_Setting},
+                        null
+                );
 
+        if(LocatonCursor.moveToFirst()){
+        int LocationIndex=LocatonCursor.getColumnIndex(WeatherContract.LocationEntry._ID);
+        LocationID=LocatonCursor.getLong(LocationIndex);
+        }
 
+        else {
+            ContentValues locationValues=new ContentValues();
 
+            locationValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, location_Setting);
+            locationValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, City_name);
+            locationValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, lat);
+            locationValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, lon);
 
-        return 0;
+           Uri insert_uri=Json_context.getContentResolver().insert(
+                    WeatherContract.LocationEntry.CONTENT_URI,locationValues);
+            Log.i("retUri",insert_uri.toString());
+            LocationID= ContentUris.parseId(insert_uri);
+        }
+
+        LocatonCursor.close();
+        return LocationID;
     }
-
-
 
 
 
@@ -79,8 +105,6 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
         String json_text_entry=(String) mEntry[0];
         int Day_count_entry=(Integer) mEntry[1];
-
-
 
 
         final String OWM_LIST = "list";
@@ -115,12 +139,13 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
                 m_max_temp=temperatureObject.getDouble(OWM_MAX);
                 m_temp_result=HighLowFormat(m_max_temp, m_min_temp);
                 resultStrs[i]+=" - "+m_temp_result;
-
-                //Log.i("APPS",resultStrs[i]);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        addLocation("548","BAHAMA",26.3,20);
+
         return resultStrs;
     }
 }
