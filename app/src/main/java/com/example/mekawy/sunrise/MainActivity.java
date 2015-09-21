@@ -62,13 +62,14 @@ public class MainActivity extends ActionBarActivity {
         else if(id== R.id.Map_setting){
             openPreferredLocationInMap();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     //open Location form preferences in Map application which scheme is "geo"
     public void openPreferredLocationInMap(){
-        SharedPreferences shrd_pref= PreferenceManager.getDefaultSharedPreferences(this);
-        String current_location=shrd_pref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+
+        String current_location=Utility.getPreferredLocation(this);
         Uri geo_uri=Uri.parse("geo:0,0?").buildUpon().appendQueryParameter("q",current_location).build();
         Intent geo_intent=new Intent(Intent.ACTION_VIEW);
         geo_intent.setData(geo_uri);

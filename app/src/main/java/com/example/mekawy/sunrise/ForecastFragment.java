@@ -2,6 +2,8 @@ package com.example.mekawy.sunrise;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
     //many Restrections and will be modified later
-    private ArrayAdapter<String> mForecastAdapter=null;
+    private ForecastAdapter mForecastAdapter=null;
 
     public ForecastFragment() {
     }
@@ -32,11 +34,9 @@ public class ForecastFragment extends Fragment {
     }
 
     public void updateWeather(){
-        SharedPreferences weather_pref= PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String current_weather_loc=weather_pref.getString
-                (getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        FetchWeatherTask new_weather_fetch=new FetchWeatherTask(mForecastAdapter,getActivity());
-        new_weather_fetch.execute(current_weather_loc);
+        String loc=Utility.getPreferredLocation(getActivity());
+        FetchWeatherTask new_weather_fetch=new FetchWeatherTask(getActivity());
+        new_weather_fetch.execute(loc);
     }
 
 
@@ -50,37 +50,21 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_main, container, false);
-        //Dummy Data
-        String[] data = {
-                "Mon 6/23 - Sunny - 31/17",
-                "Tue 6/24 - Foggy - 21/8",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
-        };
-        //List of Dummy Data
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-        mForecastAdapter =
-                new ArrayAdapter<String>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_forecast, // The name of the layout ID.
-                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        weekForecast);
+        String locationSetting = Utility.getPreferredLocation(getActivity());
+
+        // Sort order:  Ascending, by date.
+        String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
+                locationSetting, System.currentTimeMillis());
+
+        Cursor cur = getActivity().getContentResolver().query(weatherForLocationUri,
+                null, null, null, sortOrder);
+
+        mForecastAdapter=new ForecastAdapter(getActivity(),cur,0);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String intent_msg=adapterView.getItemAtPosition(i).toString();
-                startActivity(new Intent(getActivity(),DetailActivity.class).putExtra(Intent.EXTRA_TEXT,intent_msg));
-            }
-        });
 
         return rootView;
     }

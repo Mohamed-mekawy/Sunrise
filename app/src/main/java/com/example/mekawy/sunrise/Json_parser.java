@@ -22,66 +22,16 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 
-public class Json_parser extends AsyncTask<Object,Void,String[]>{
+public class Json_parser extends AsyncTask<Object,Void,Void>{
+
 
     private final String LOG_TAG = Json_parser.class.getSimpleName();
-
-    private ArrayAdapter<String> Json_ArrayAdapter;
     private Context Json_context;
 
-    public Json_parser(ArrayAdapter<String> Origin_ArrayAdapter,Context Origin_Context){
-            Json_ArrayAdapter=Origin_ArrayAdapter;
+    public Json_parser(Context Origin_Context){
             Json_context=Origin_Context;
     }
 
-
-    @Override
-    protected void onPostExecute(String[] strings) {
-        super.onPostExecute(strings);
-        //unsuitable method
-        if(strings.length>0) {
-            Json_ArrayAdapter.clear();
-            for (String entry : strings) {
-                Json_ArrayAdapter.add(entry);
-            }
-        }
-
-    }
-
-
-    //Append High and Low tempreature Format Like: 26/10
-    private String HighLowFormat(double High,double Low){
-        Long High_t=Math.round(High);
-        Long Low_t=Math.round(Low);
-        return High_t+" / "+Low_t;
-    }
-
-    //Replace with origin sake code
-    private String getReadableDateString(long time){
-        // Because the API returns a unix timestamp (measured in seconds),
-        // it must be converted to milliseconds in order to be converted to valid date.
-        Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat("E, MMM d");
-        return format.format(date).toString();
-    }
-
-
-
-    String[] convertContentValuesToUXFormat(Vector<ContentValues> cvv) {
-        // return strings to keep UI functional for now
-        String[] resultStrs = new String[cvv.size()];
-        for ( int i = 0; i < cvv.size(); i++ ) {
-            ContentValues weatherValues = cvv.elementAt(i);
-            String highAndLow = HighLowFormat(
-                    weatherValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP),
-                    weatherValues.getAsDouble(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP));
-            resultStrs[i] = getReadableDateString(
-                    weatherValues.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE)) +
-                    " - " + weatherValues.getAsString(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC) +
-                    " - " + highAndLow;
-        }
-        return resultStrs;
-    }
 
 
 
@@ -120,7 +70,7 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
     }
 
 
-    private String[] getWeatherDataFromJson(String forecastJsonStr, String locationSetting) throws JSONException{
+    private void getWeatherDataFromJson(String forecastJsonStr, String locationSetting) throws JSONException{
 
         final String OWM_CITY = "city";
         final String OWM_CITY_NAME = "name";
@@ -220,70 +170,36 @@ public class Json_parser extends AsyncTask<Object,Void,String[]>{
 
                 cVVector.add(weatherValues);
             }
-            /*
-            for(int x=0;x<cVVector.size();x++){
-                Log.i(LOG_TAG,cVVector.get(x).toString());
-            }*/
 
-
-
+            int inserted=0;
             if(cVVector.size()>0){
                 ContentValues[] cvArray=new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
-                Json_context.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI,cvArray);
+                inserted=Json_context.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI,cvArray);
             }
 
-            String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";  //date ASC
-
-            Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-                    locationSetting, System.currentTimeMillis());
-            //uri
-            Log.i(LOG_TAG,weatherForLocationUri.toString());
-            Cursor cr=Json_context.getContentResolver().query(weatherForLocationUri,null,null,null,sortOrder);
-
-
-            cVVector=new Vector<ContentValues>(cr.getCount());
-
-            if(cr.moveToFirst()) {
-                do {
-                    ContentValues cv = new ContentValues();
-                    DatabaseUtils.cursorRowToContentValues(cr, cv);
-                    cVVector.add(cv);
-                }
-                while (cr.moveToNext());
-            }
-                String[] returned_results=convertContentValuesToUXFormat(cVVector);
-                return  returned_results;
 
         }catch (JSONException e){
         Log.i(LOG_TAG,e.getMessage().toString());
         e.printStackTrace();
         }
 
-
-        return null;
-
-
-
-
     }
 
 
     @Override
-    protected String[] doInBackground(Object... mEntry){
+    protected Void doInBackground(Object... mEntry){
 
         String json_text_entry=(String) mEntry[0];
         String Location_setting=(String) mEntry[1];
 
-
-//        Log.i(LOG_TAG,json_text_entry+"\n"+Location_setting+"\n"+Integer.toString(Day_count_entry));
-
-
         try {
-            return getWeatherDataFromJson(json_text_entry,Location_setting);
+            getWeatherDataFromJson(json_text_entry,Location_setting);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.example.mekawy.sunrise;
 
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -28,8 +29,20 @@ public class Setting_Activity extends PreferenceActivity implements Preference.O
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
-        String value=o.toString();
-        preference.setSummary(value);
+        String stringValue=o.toString();
+
+        if (preference instanceof ListPreference) {
+            // For list preferences, look up the correct display value in
+            // the preference's 'entries' list (since they have separate labels/values).
+            ListPreference listPreference = (ListPreference) preference;
+            int prefIndex = listPreference.findIndexOfValue(stringValue);
+            if (prefIndex >= 0) {
+                preference.setSummary(listPreference.getEntries()[prefIndex]);
+            }
+        } else {
+            // For other preferences, set the summary to the value's simple string representation.
+            preference.setSummary(stringValue);
+        }
         return true;
     }
 }
