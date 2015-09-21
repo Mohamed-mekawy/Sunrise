@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -93,6 +94,25 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
 
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cur=(Cursor) adapterView.getItemAtPosition(i);
+                if(cur !=null){
+                 String Location_settings=Utility.getPreferredLocation(getActivity());
+                 Intent i_intent=new Intent(getActivity(),DetailActivity.class).
+                         setData(WeatherContract.WeatherEntry.
+                         buildWeatherLocationWithDate(Location_settings,cur.getLong(COL_WEATHER_DATE)));
+                    startActivity(i_intent);
+                }
+            }
+        });
+
+
+
+
+
         return rootView;
     }
 
@@ -112,7 +132,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         return new CursorLoader(getActivity(),weatherForLocationUri,FORECAST_COLUMNS,null,null,sortOrder);
     }
-    
+
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);

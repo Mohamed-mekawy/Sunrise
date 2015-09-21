@@ -59,9 +59,9 @@ public class DetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root= inflater.inflate(R.layout.fragment_detail, container, false);
         Intent text_intent=getActivity().getIntent();
-        if(text_intent!=null && text_intent.hasExtra(Intent.EXTRA_TEXT)){
+        if(text_intent!=null ){
             TextView forecast_tv=(TextView) root.findViewById(R.id.detail_text);
-            Sharable_Forecast=text_intent.getStringExtra(Intent.EXTRA_TEXT)+FORECAST_SHARE_HASHTAG;
+            Sharable_Forecast=text_intent.getDataString()+FORECAST_SHARE_HASHTAG;
             forecast_tv.setText(Sharable_Forecast);
         }
         return root;
