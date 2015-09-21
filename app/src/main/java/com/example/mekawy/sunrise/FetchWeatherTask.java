@@ -22,7 +22,6 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String>{
 
 
 
-
     private Context mFetchContext;
 
     public FetchWeatherTask(Context F_Context){

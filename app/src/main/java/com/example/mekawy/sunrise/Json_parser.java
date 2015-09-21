@@ -199,7 +199,6 @@ public class Json_parser extends AsyncTask<Object,Void,Void>{
             e.printStackTrace();
         }
 
-
         return null;
     }
 }
