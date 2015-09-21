@@ -101,9 +101,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 Cursor cur=(Cursor) adapterView.getItemAtPosition(i);
                 if(cur !=null){
                  String Location_settings=Utility.getPreferredLocation(getActivity());
-                 Intent i_intent=new Intent(getActivity(),DetailActivity.class).
+
+                    Intent i_intent=new Intent(getActivity(),DetailActivity.class).
                          setData(WeatherContract.WeatherEntry.
                          buildWeatherLocationWithDate(Location_settings,cur.getLong(COL_WEATHER_DATE)));
+
                     startActivity(i_intent);
                 }
             }
