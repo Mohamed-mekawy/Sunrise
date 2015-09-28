@@ -59,6 +59,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public void onStart() {
         super.onStart();
         updateWeather();
+        getLoaderManager().restartLoader(FORECAST_LOADER,null,this);
     }
 
     public void updateWeather(){
@@ -99,8 +100,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cur=(Cursor) adapterView.getItemAtPosition(i);
+
                 if(cur !=null){
-                 String Location_settings=Utility.getPreferredLocation(getActivity());
+                    String Location_settings=Utility.getPreferredLocation(getActivity());
 
                     Intent i_intent=new Intent(getActivity(),DetailActivity.class).
                          setData(WeatherContract.WeatherEntry.
@@ -110,10 +112,6 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 }
             }
         });
-
-
-
-
 
         return rootView;
     }
@@ -127,8 +125,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.i("mywatcher","oncreateLoader");
+
         String locationSetting=Utility.getPreferredLocation(getActivity());
+
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+
         Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
                 locationSetting, System.currentTimeMillis());
 
@@ -142,6 +144,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
         mForecastAdapter.swapCursor(null);
     }
 }

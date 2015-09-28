@@ -35,9 +35,8 @@ public class FetchWeatherTask extends AsyncTask<String,Void,String>{
         //check results
         Log.i(LOG_TAG,s);
         Json_parser parser=new Json_parser(mFetchContext);
-
         //execute Json_parser Asynch Task using object contain "Json_text" and number of days;
-        parser.execute(s,Location_setting,numDays);
+        parser.execute(s,Location_setting);
     }
 
     @Override

@@ -28,7 +28,8 @@ public class Json_parser extends AsyncTask<Object,Void,Void>{
     private final String LOG_TAG = Json_parser.class.getSimpleName();
     private Context Json_context;
 
-    public Json_parser(Context Origin_Context){
+    public Json_parser(
+            Context Origin_Context){
             Json_context=Origin_Context;
     }
 
@@ -172,6 +173,7 @@ public class Json_parser extends AsyncTask<Object,Void,Void>{
             }
 
             int inserted=0;
+
             if(cVVector.size()>0){
                 ContentValues[] cvArray=new ContentValues[cVVector.size()];
                 cVVector.toArray(cvArray);
@@ -183,13 +185,12 @@ public class Json_parser extends AsyncTask<Object,Void,Void>{
         Log.i(LOG_TAG,e.getMessage().toString());
         e.printStackTrace();
         }
-
     }
 
 
     @Override
     protected Void doInBackground(Object... mEntry){
-
+        Log.i("mywatcher","doinback");
         String json_text_entry=(String) mEntry[0];
         String Location_setting=(String) mEntry[1];
 
